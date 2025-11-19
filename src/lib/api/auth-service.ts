@@ -3,9 +3,8 @@ import type { ApiResponse } from "../../types/request-types";
 import { apiClient } from "./client";
 import { mockLogin } from "../mock/auth";
 
-const isMockMode = () => {
-  return !process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL === "";
-};
+// MODO DEMO: Sempre usa mocks - não faz requisições reais
+const isMockMode = () => true;
 
 export const authService = {
   async register(data: RegisterRequest): Promise<ApiResponse<RegisterResponseWithToken>> {

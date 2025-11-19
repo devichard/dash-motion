@@ -40,8 +40,8 @@ export default function Charts() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-        <div className="lg:col-span-4">
+      <div className="grid grid-cols-1 lg:grid-cols-8 gap-4">
+        <div className="lg:col-span-8">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
             {[...Array(4)].map((_, i) => (
               <Card key={i.toString()}>
@@ -62,8 +62,8 @@ export default function Charts() {
 
   if (error) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-        <div className="lg:col-span-4">
+      <div className="grid grid-cols-1 lg:grid-cols-8 gap-4">
+        <div className="lg:col-span-8">
           <Card>
             <CardHeader>
               <CardTitle className="text-destructive">Erro ao carregar dados</CardTitle>
@@ -76,16 +76,17 @@ export default function Charts() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-      <div className="lg:col-span-4">
+    <div className="grid grid-cols-1 lg:grid-cols-8 gap-4">
+      {/* Cards de Métricas - Primeiro */}
+      <div className="lg:col-span-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardDescription className="text-xs text-muted-foreground flex items-center gap-2">
                 <BadgeDollarSign className="size-4" />
                 Total em Vendas
               </CardDescription>
-              <CardTitle className="text-3xl font-medium">
+              <CardTitle className="text-4xl font-medium">
                 <NumberTicker value={data?.totalRevenue ?? 0} variant="currency" decimalPlaces={2} delay={0.2} />
               </CardTitle>
 
@@ -95,12 +96,12 @@ export default function Charts() {
             </CardHeader>
           </Card>
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardDescription className="text-xs text-muted-foreground flex items-center gap-2">
                 <Users className="size-4" />
                 Ticket Médio
               </CardDescription>
-              <CardTitle className="text-3xl font-medium">
+              <CardTitle className="text-4xl font-medium">
                 <NumberTicker value={data?.averageTicket ?? 0} variant="currency" decimalPlaces={2} delay={0.4} />
               </CardTitle>
 
@@ -110,12 +111,12 @@ export default function Charts() {
             </CardHeader>
           </Card>
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardDescription className="text-xs text-muted-foreground flex items-center gap-2">
                 <CheckCircle2 className="size-4" />
                 Pedidos Pagos
               </CardDescription>
-              <CardTitle className="text-3xl font-medium">
+              <CardTitle className="text-4xl font-medium">
                 <NumberTicker value={data?.qtdPaidOrders ?? 0} delay={0.6} />
               </CardTitle>
 
@@ -125,12 +126,12 @@ export default function Charts() {
             </CardHeader>
           </Card>
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardDescription className="text-xs text-muted-foreground flex items-center gap-2">
                 <Clock className="size-4" />
                 Reembolsos no Período
               </CardDescription>
-              <CardTitle className="text-3xl font-medium">
+              <CardTitle className="text-4xl font-medium">
                 <NumberTicker value={data?.qtdRefunds ?? 0} delay={0.8} />
               </CardTitle>
 
@@ -141,14 +142,16 @@ export default function Charts() {
           </Card>
         </div>
       </div>
-      <div className="lg:col-span-3">
+
+      {/* Gráficos - Depois dos cards */}
+      <div className="lg:col-span-5">
         <ChartAreaInteractive />
       </div>
-      <div className="lg:col-span-1">
+      <div className="lg:col-span-3">
         <DemographicCard />
       </div>
 
-      <div className="lg:col-span-4">
+      <div className="lg:col-span-8">
         <Table />
       </div>
     </div>

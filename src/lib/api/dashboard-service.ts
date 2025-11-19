@@ -4,9 +4,8 @@ import type { ApiResponse } from "../../types/request-types";
 import { apiClient } from "./client";
 import { getMockSellerDashboardData, getMockDailySalesValues } from "../mock/dashboard";
 
-const isMockMode = () => {
-  return !process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL === "";
-};
+// MODO DEMO: Sempre usa mocks - não faz requisições reais
+const isMockMode = () => true;
 
 export const dashboardService = {
   //Overview: cards da página de visão geral

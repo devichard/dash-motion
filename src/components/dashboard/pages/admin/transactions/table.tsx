@@ -43,27 +43,9 @@ export default function TableTransactions({ statusFilter, searchQuery }: TableTr
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        setLoading(true);
-        const response = await adminService.getPayments();
-
-        if (response.success) {
-          const raw = Array.isArray(response.data) ? response.data : (response.data.data ?? []);
-          const mapped = raw.map(adaptTransaction);
-          setTransactions(mapped);
-        } else {
-          toast.error("Erro ao carregar transações");
-        }
-      } catch (error) {
-        console.error(error);
-        toast.error("Erro ao carregar transações");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTransactions();
+    // MODO DEMO: Lista vazia - não carrega dados reais
+    setTransactions([]);
+    setLoading(false);
   }, []);
 
   const handleRowClick = (transaction: TransactionItem) => {

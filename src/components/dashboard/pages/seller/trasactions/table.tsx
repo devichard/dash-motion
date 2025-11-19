@@ -35,39 +35,9 @@ export default function TableTransaction({ statusFilter = "all", searchQuery = "
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadPayments = async () => {
-      try {
-        const response = await paymentsService.list();
-
-        if (response?.success && response.data) {
-          // Verificar se response.data é um array diretamente ou se tem propriedade data (resposta paginada)
-          let paymentsData: Payment[] = [];
-
-          if (Array.isArray(response.data)) {
-            paymentsData = response.data;
-          } else if (
-            response.data &&
-            typeof response.data === "object" &&
-            "data" in response.data &&
-            Array.isArray(response.data.data)
-          ) {
-            // Resposta paginada: { data: Payment[], totalPages, totalRecords, ... }
-            paymentsData = response.data.data;
-          }
-
-          setPayments(paymentsData);
-        } else {
-          setPayments([]);
-        }
-      } catch (err) {
-        console.error("Erro ao buscar pagamentos:", err);
-        setPayments([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPayments();
+    // MODO DEMO: Lista vazia - não carrega dados reais
+    setPayments([]);
+    setLoading(false);
   }, []);
 
   const transactions = useMemo<TransactionItem[]>(() => {

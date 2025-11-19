@@ -14,12 +14,12 @@ function generateSmoothValue(base: number, variation: number = 0.15): number {
 
 // Dados mock realistas para o dashboard do seller
 export function getMockSellerDashboardData(): SellerDashboardDataResponse {
-  // Faturamento total: entre 450k e 840k (variando para parecer realista)
-  const baseRevenue = 650000; // Base de ~650k
-  const totalRevenue = generateSmoothValue(baseRevenue, 0.25);
+  // Faturamento total: entre 680k e 840k (valores mais altos)
+  const baseRevenue = 750000; // Base de ~750k
+  const totalRevenue = generateSmoothValue(baseRevenue, 0.15);
 
-  // Ticket médio: entre 120 e 450 reais
-  const averageTicket = randomValue(120, 450);
+  // Ticket médio fixo em 197 reais
+  const averageTicket = 197;
 
   // Quantidade de pedidos baseada no ticket médio
   const qtdPaidOrders = Math.floor(totalRevenue / averageTicket);
@@ -30,7 +30,7 @@ export function getMockSellerDashboardData(): SellerDashboardDataResponse {
 
   return {
     totalRevenue: Math.round(totalRevenue * 100) / 100,
-    averageTicket: Math.round(averageTicket * 100) / 100,
+    averageTicket: averageTicket,
     qtdPaidOrders,
     qtdRefunds,
   };
@@ -38,12 +38,12 @@ export function getMockSellerDashboardData(): SellerDashboardDataResponse {
 
 // Dados mock realistas para o dashboard do admin (valores mais altos)
 export function getMockAdminDashboardData(): AdminDashboardDataResponse {
-  // Faturamento total: entre 680k e 840k (mais alto que seller individual)
-  const baseRevenue = 750000; // Base de ~750k
-  const totalRevenue = generateSmoothValue(baseRevenue, 0.15);
+  // Faturamento total: entre 780k e 840k (valores mais altos)
+  const baseRevenue = 810000; // Base de ~810k
+  const totalRevenue = generateSmoothValue(baseRevenue, 0.1);
 
-  // Ticket médio: entre 180 e 520 reais
-  const averageTicket = randomValue(180, 520);
+  // Ticket médio fixo em 197 reais
+  const averageTicket = 197;
 
   // Quantidade de pedidos
   const qtdPaidOrders = Math.floor(totalRevenue / averageTicket);
@@ -54,7 +54,7 @@ export function getMockAdminDashboardData(): AdminDashboardDataResponse {
 
   return {
     totalRevenue: Math.round(totalRevenue * 100) / 100,
-    averageTicket: Math.round(averageTicket * 100) / 100,
+    averageTicket: averageTicket,
     qtdPaidOrders,
     qtdRefunds,
   };

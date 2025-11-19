@@ -81,15 +81,13 @@ export default function SignIn() {
           <h1 className="text-3xl font-bold">Entre na sua conta</h1>
           <p className="mb-8 text-muted-foreground">Digite seu email abaixo para entrar na sua conta</p>
 
-          {!process.env.NEXT_PUBLIC_BACKEND_URL && (
-            <div className="mb-6 p-4 bg-muted rounded-lg border">
-              <p className="text-sm font-semibold mb-2">Modo Demo - Acesso Rápido:</p>
-              <div className="text-xs space-y-1 text-muted-foreground">
-                <p><strong>Admin:</strong> admin@demo.com / admin123</p>
-                <p><strong>Seller:</strong> seller@demo.com / seller123</p>
-              </div>
+          <div className="mb-6 p-4 bg-muted rounded-lg border">
+            <p className="text-sm font-semibold mb-2">Modo Demo - Acesso Rápido:</p>
+            <div className="text-xs space-y-1 text-muted-foreground">
+              <p><strong>Admin:</strong> admin@demo.com / admin123</p>
+              <p><strong>Seller:</strong> seller@demo.com / seller123</p>
             </div>
-          )}
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">

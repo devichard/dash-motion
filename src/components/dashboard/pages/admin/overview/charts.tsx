@@ -67,15 +67,15 @@ export default function Charts({ dateRange }: ChartsProps) {
         <DemographicCard />
       </div>
 
-      <div className="lg:col-span-4">
+      <div className="lg:col-span-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardDescription className="text-xs text-muted-foreground flex items-center gap-2">
                 <BadgeDollarSign className="size-4" />
                 Total em Vendas
               </CardDescription>
-              <CardTitle className="text-3xl font-medium">
+              <CardTitle className="text-4xl font-medium">
                 <NumberTicker value={overviewData?.totalRevenue ?? 0} variant="currency" decimalPlaces={2} delay={0.2} />
               </CardTitle>
 
@@ -89,12 +89,12 @@ export default function Charts({ dateRange }: ChartsProps) {
             </CardHeader>
           </Card>
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardDescription className="text-xs text-muted-foreground flex items-center gap-2">
                 <Users className="size-4" />
                 Ticket Médio
               </CardDescription>
-              <CardTitle className="text-3xl font-medium">
+              <CardTitle className="text-4xl font-medium">
                 <NumberTicker value={overviewData?.averageTicket ?? 0} variant="currency" decimalPlaces={2} delay={0.4} />
               </CardTitle>
 
@@ -108,12 +108,12 @@ export default function Charts({ dateRange }: ChartsProps) {
             </CardHeader>
           </Card>
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardDescription className="text-xs text-muted-foreground flex items-center gap-2">
                 <CheckCircle2 className="size-4" />
                 Pedidos Pagos
               </CardDescription>
-              <CardTitle className="text-3xl font-medium">
+              <CardTitle className="text-4xl font-medium">
                 <NumberTicker value={overviewData?.qtdPaidOrders ?? 0} delay={0.6} />
               </CardTitle>
 
@@ -127,12 +127,12 @@ export default function Charts({ dateRange }: ChartsProps) {
             </CardHeader>
           </Card>
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-3">
               <CardDescription className="text-xs text-muted-foreground flex items-center gap-2">
                 <Clock className="size-4" />
                 Reembolsos no Período
               </CardDescription>
-              <CardTitle className="text-3xl font-medium">
+              <CardTitle className="text-4xl font-medium">
                 <NumberTicker value={overviewData?.qtdRefunds ?? 0} delay={0.8} />
               </CardTitle>
 

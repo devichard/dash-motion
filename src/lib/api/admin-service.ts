@@ -54,7 +54,8 @@ export const adminService = {
     startDate?: string,
     endDate?: string,
   ): Promise<ApiResponse<AdminDashboardDataResponse>> {
-    const isMockMode = !process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL === "";
+    // MODO DEMO: Sempre usa mocks - não faz requisições reais
+    const isMockMode = true;
 
     if (isMockMode) {
       // Simula delay de rede
@@ -79,7 +80,8 @@ export const adminService = {
     startDate?: string,
     endDate?: string,
   ): Promise<ApiResponse<DailySalesCount[]>> {
-    const isMockMode = !process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL === "";
+    // MODO DEMO: Sempre usa mocks - não faz requisições reais
+    const isMockMode = true;
 
     if (isMockMode) {
       // Simula delay de rede
@@ -104,7 +106,8 @@ export const adminService = {
     startDate?: string,
     endDate?: string,
   ): Promise<ApiResponse<DailySalesValues[]>> {
-    const isMockMode = !process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL === "";
+    // MODO DEMO: Sempre usa mocks - não faz requisições reais
+    const isMockMode = true;
 
     if (isMockMode) {
       // Simula delay de rede

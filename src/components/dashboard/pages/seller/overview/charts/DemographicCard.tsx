@@ -2,16 +2,20 @@
 import Image from "next/image";
 
 import CountryMap from "@/components/ui/CountryMap";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function DemographicCard() {
   return (
     <Card className="h-full flex flex-col">
-      <CardHeader className="flex items-center border-b sm:flex-row">
+      <CardHeader className="flex items-center justify-between border-b sm:flex-row">
         <div>
           <CardTitle className="text-base font-medium">Vendas Globais</CardTitle>
           <CardDescription className="text-xs">Acompanhe em tempo real suas vendas</CardDescription>
         </div>
+        <Button variant="ghost" size="sm" className="text-xs">
+          Veja Todas
+        </Button>
       </CardHeader>
       <CardContent className="pb-2 flex-1 flex flex-col min-h-[200px]">
         <div id="mapOne" className="mapOne map-btn flex-1 w-full min-h-[200px]">

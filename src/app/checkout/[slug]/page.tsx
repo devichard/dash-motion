@@ -33,19 +33,9 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
   const [loadingGateway, setLoadingGateway] = useState(false);
 
   useEffect(() => {
-    const loadPaymentInfo = async () => {
-      try {
-        const response = await paymentLinksService.getByHash(slug);
-
-        if (response?.success) setPaymentLink(response.data);
-      } catch (_error) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPaymentInfo();
+    // MODO DEMO: Checkout desabilitado - apenas visual
+    setError(true);
+    setLoading(false);
     setMounted(true);
   }, [slug]);
 
@@ -107,9 +97,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
 
   if (error)
     return (
-      <div className="flex justify-center items-center h-screen text-center text-muted-foreground">
-        <span>Há algo de errado com este link!</span>
-        <span>Contate o seu vendedor.</span>
+      <div className="flex flex-col justify-center items-center h-screen text-center text-muted-foreground gap-4">
+        <span className="text-lg font-semibold">Modo Demo</span>
+        <span>Checkout desabilitado nesta versão demo.</span>
+        <span>Use apenas o dashboard para visualização.</span>
       </div>
     );
 
