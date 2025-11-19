@@ -64,6 +64,7 @@ export const adminService = {
         success: true,
         status: 200,
         data: getMockAdminDashboardData(),
+        message: undefined,
       };
     }
 
@@ -88,6 +89,7 @@ export const adminService = {
         success: true,
         status: 200,
         data: getMockDailySalesCount(period || "month"),
+        message: undefined,
       };
     }
 
@@ -112,6 +114,7 @@ export const adminService = {
         success: true,
         status: 200,
         data: getMockDailySalesValues(period || "month"),
+        message: undefined,
       };
     }
 
