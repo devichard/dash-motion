@@ -22,6 +22,7 @@ export const dashboardService = {
         success: true,
         status: 200,
         data: getMockSellerDashboardData(),
+        message: undefined,
       };
     }
 
@@ -43,6 +44,7 @@ export const dashboardService = {
         success: true,
         status: 200,
         data: getMockDailySalesValues(period || "month"),
+        message: undefined,
       };
     }
 

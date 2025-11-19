@@ -32,6 +32,7 @@ export const authService = {
           success: true,
           status: 200,
           data: mockResponse,
+          message: undefined,
         };
       }
 
