@@ -10,13 +10,188 @@ import { formatDateTime } from "@/components/ui/data-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { paymentsService } from "@/lib/api/payments-service";
 import type { Payment } from "@/types/payments";
-import { PaymentMethod, PaymentStatus } from "@/types/payments";
+import { PaymentMethod, PaymentStatus, PurchaserProvider } from "@/types/payments";
 
 interface TableOverviewSallerProps {
   onDataChange?: (data: Payment[]) => void;
 }
 
 const ITEMS_PER_PAGE = 9;
+
+  // Função para gerar dados mockados para demo
+function generateMockData(): PaymentWithDisplayMethod[] {
+  const now = new Date();
+  const mockCustomers = [
+    {
+      name: "Ana Silva Santos",
+      email: "ana.silva@email.com",
+      product: "Curso de Marketing Digital",
+      amount: 1297.0,
+      method: PaymentMethod.pix,
+      displayMethod: "Pix" as const,
+      status: PaymentStatus.finished,
+      daysAgo: 1,
+      hoursAgo: 2,
+      minutesAgo: 42,
+    },
+    {
+      name: "Carlos Eduardo Lima",
+      email: "carlos.lima@empresa.com.br",
+      product: "E-book: Guia Completo de Vendas",
+      amount: 89.9,
+      method: PaymentMethod.pix,
+      displayMethod: "Cartão" as const,
+      status: PaymentStatus.finished,
+      daysAgo: 1,
+      hoursAgo: 0,
+      minutesAgo: 42,
+    },
+    {
+      name: "Maria Fernanda Costa",
+      email: "maria.costa@startup.com",
+      product: "Consultoria Premium - 1h",
+      amount: 450.0,
+      method: PaymentMethod.pix,
+      displayMethod: "Boleto" as const,
+      status: PaymentStatus.peding,
+      daysAgo: 2,
+      hoursAgo: 3,
+      minutesAgo: 42,
+    },
+    {
+      name: "João Pedro Oliveira",
+      email: "joao.oliveira@freelancer.com",
+      product: "Mentoria Individual - 30min",
+      amount: 180.0,
+      method: PaymentMethod.pix,
+      displayMethod: "Pix" as const,
+      status: PaymentStatus.finished,
+      daysAgo: 2,
+      hoursAgo: 2,
+      minutesAgo: 42,
+    },
+    {
+      name: "Patricia Almeida",
+      email: "patricia.almeida@consultoria.com",
+      product: "Workshop Online: Estratégias de Vendas",
+      amount: 297.5,
+      method: PaymentMethod.pix,
+      displayMethod: "Cartão" as const,
+      status: PaymentStatus.finished,
+      daysAgo: 3,
+      hoursAgo: 2,
+      minutesAgo: 42,
+    },
+    {
+      name: "Ricardo Santos",
+      email: "ricardo.santos@tech.com",
+      product: "Curso de Desenvolvimento Web",
+      amount: 599.0,
+      method: PaymentMethod.pix,
+      displayMethod: "Pix" as const,
+      status: PaymentStatus.finished,
+      daysAgo: 4,
+      hoursAgo: 5,
+      minutesAgo: 15,
+    },
+    {
+      name: "Fernanda Oliveira",
+      email: "fernanda.oliveira@design.com",
+      product: "Pacote de Templates Premium",
+      amount: 149.9,
+      method: PaymentMethod.pix,
+      displayMethod: "Boleto" as const,
+      status: PaymentStatus.peding,
+      daysAgo: 5,
+      hoursAgo: 1,
+      minutesAgo: 30,
+    },
+    {
+      name: "Lucas Rodrigues",
+      email: "lucas.rodrigues@marketing.com",
+      product: "Consultoria de Marketing Digital",
+      amount: 350.0,
+      method: PaymentMethod.pix,
+      displayMethod: "Cartão" as const,
+      status: PaymentStatus.finished,
+      daysAgo: 6,
+      hoursAgo: 8,
+      minutesAgo: 20,
+    },
+    {
+      name: "Juliana Costa",
+      email: "juliana.costa@empresa.com",
+      product: "Plano Mensal de Suporte",
+      amount: 199.0,
+      method: PaymentMethod.pix,
+      displayMethod: "Pix" as const,
+      status: PaymentStatus.finished,
+      daysAgo: 7,
+      hoursAgo: 12,
+      minutesAgo: 10,
+    },
+    {
+      name: "Maria Eduarda Moreira",
+      email: "dudinhapink_pets@petshop.com",
+      product: "Curso Método de Adestramento",
+      amount: 429.0,
+      method: PaymentMethod.pix,
+      displayMethod: "Cartão" as const,
+      status: PaymentStatus.cancelled,
+      daysAgo: 8,
+      hoursAgo: 6,
+      minutesAgo: 45,
+    },
+  ];
+
+  return mockCustomers.map((customer, index) => {
+    const createdDate = new Date(now);
+    createdDate.setDate(createdDate.getDate() - customer.daysAgo);
+    createdDate.setHours(createdDate.getHours() - customer.hoursAgo);
+    createdDate.setMinutes(createdDate.getMinutes() - customer.minutesAgo);
+
+    const expiresDate = new Date(createdDate);
+    expiresDate.setDate(expiresDate.getDate() + 7);
+
+    const confirmedDate = customer.status === PaymentStatus.finished ? createdDate : null;
+
+    // Taxa de gateway: 2.99% + R$ 0,20
+    const gatewayFee = customer.amount * 0.0299 + 0.2;
+    const amountWithGatewayFees = customer.amount + gatewayFee;
+    const amountWithAllFees = amountWithGatewayFees;
+
+    return {
+      id: `mock-payment-${index + 1}`,
+      paymentLinkId: `mock-link-${index + 1}`,
+      paymentLink: {
+        id: `mock-link-${index + 1}`,
+        description: customer.product,
+        url: `https://demo.com/pay/mock-link-${index + 1}`,
+        hash: `mock-hash-${index + 1}`,
+        sellerId: "mock-seller-id",
+        status: "ACTIVE" as any,
+        qtdPayments: 1,
+        amount: customer.amount,
+        createdAt: createdDate,
+      },
+      externalId: `ext-${index + 1}`,
+      customerId: `mock-customer-${index + 1}`,
+      purchaser: PurchaserProvider.SPLITPAY,
+      method: customer.method,
+      displayMethod: customer.displayMethod,
+      amount: customer.amount,
+      amountWithFeesGateway: amountWithGatewayFees,
+      amountWithAllFees: amountWithAllFees,
+      customerName: customer.name,
+      customerEmail: customer.email,
+      status: customer.status,
+      qrCode: null,
+      createdAt: createdDate,
+      expiresAt: expiresDate,
+      confirmedAt: confirmedDate,
+    };
+  });
+}
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat("pt-BR", {
@@ -25,8 +200,18 @@ function formatCurrency(value: number): string {
   }).format(value);
 }
 
-function formatPaymentMethod(method: PaymentMethod): "Pix" | "Boleto" | "Cartão" {
-  switch (method) {
+// Estender Payment para incluir método de exibição customizado
+type PaymentWithDisplayMethod = Payment & {
+  displayMethod?: "Pix" | "Boleto" | "Cartão";
+};
+
+function formatPaymentMethod(payment: PaymentWithDisplayMethod): "Pix" | "Boleto" | "Cartão" {
+  // Se tiver displayMethod customizado, usar ele
+  if (payment.displayMethod) {
+    return payment.displayMethod;
+  }
+  // Caso contrário, usar o método padrão
+  switch (payment.method) {
     case PaymentMethod.pix:
       return "Pix";
     default:
@@ -49,7 +234,7 @@ function formatPaymentStatus(status: PaymentStatus): "Pendente" | "Aprovado" | "
 }
 
 export default function TableOverviewSaller({ onDataChange }: TableOverviewSallerProps) {
-  const [data, setData] = useState<Payment[]>([]);
+  const [data, setData] = useState<PaymentWithDisplayMethod[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -80,6 +265,12 @@ export default function TableOverviewSaller({ onDataChange }: TableOverviewSalle
             ) as Payment[];
           }
 
+          // Converter para PaymentWithDisplayMethod
+          const convertedData: PaymentWithDisplayMethod[] = rawData.map((payment) => ({
+            ...payment,
+            displayMethod: undefined, // API não retorna displayMethod
+          }));
+
           // Garantir que totalPages e totalRecords sejam acessados corretamente
           // A API retorna PaymentResponse com estrutura: { data: [], totalPages, totalRecords, currentPage, perPage }
           const totalPagesValue =
@@ -95,24 +286,36 @@ export default function TableOverviewSaller({ onDataChange }: TableOverviewSalle
             "totalRecords" in response.data &&
             typeof response.data.totalRecords === "number"
               ? response.data.totalRecords
-              : rawData.length;
+              : convertedData.length;
 
-          setData(rawData);
+          setData(convertedData);
           setTotalPages(totalPagesValue);
           setTotalRecords(totalRecordsValue);
 
           if (onDataChange) {
-            onDataChange(rawData);
+            onDataChange(convertedData);
           }
         } else {
-          setData([]);
+          // MODO DEMO: Se não houver dados, usar dados mockados
+          const mockData = generateMockData();
+          setData(mockData);
           setTotalPages(1);
-          setTotalRecords(0);
+          setTotalRecords(mockData.length);
+
+          if (onDataChange) {
+            onDataChange(mockData);
+          }
         }
       } catch (_error) {
-        setData([]);
+        // MODO DEMO: Em caso de erro, usar dados mockados
+        const mockData = generateMockData();
+        setData(mockData);
         setTotalPages(1);
-        setTotalRecords(0);
+        setTotalRecords(mockData.length);
+
+        if (onDataChange) {
+          onDataChange(mockData);
+        }
       } finally {
         setLoading(false);
       }
@@ -182,7 +385,7 @@ export default function TableOverviewSaller({ onDataChange }: TableOverviewSalle
           ) : (
             data.map((payment) => {
               const status = formatPaymentStatus(payment.status);
-              const paymentMethod = formatPaymentMethod(payment.method);
+              const paymentMethod = formatPaymentMethod(payment);
               const customerName = payment.customerName || "Cliente";
               const customerEmail = payment.customerEmail || "";
               const order = payment.paymentLink?.description || "-";
